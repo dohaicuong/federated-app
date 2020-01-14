@@ -1,0 +1,52 @@
+type Room {
+  id: ID!
+
+  name: String!
+  messages: [Message!]
+
+  adminIds: [ID!]
+  userIds: [ID!]
+}
+
+type Message {
+  id: ID!
+
+  content: String!
+  authorId: ID!
+}
+
+type Query {
+  room(id: ID!): Room
+
+  # to extend on type User
+  rooms(userId: ID!): [Room!]
+}
+
+type Mutation {
+  roomCreate(input: RoomCreateInput!): Room
+  roomAddPeople(input: RoomAddPeopleInput!): Room
+  roomRemovePeople(input: RoomRemovePeopleInput!): Room
+
+  messageSend(input: MessageSendInput!): Message
+  messageDelete(input: MessageDeleteInput!): Message
+}
+
+input RoomCreateInput {
+  name: String!
+}
+input RoomAddPeopleInput {
+  roomId: ID!
+  userId: ID!
+}
+input RoomRemovePeopleInput {
+  roomId: ID!
+  userId: ID!
+}
+
+input MessageSendInput {
+  roomId: ID!
+  content: String!
+}
+input MessageDeleteInput {
+  messageId: ID!
+}

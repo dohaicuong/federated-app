@@ -1,0 +1,29 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index"
+  },
+  "devDependencies": {
+    "@types/express-rate-limit": "^3.3.3",
+    "@types/helmet": "^0.0.45",
+    "@types/jsonwebtoken": "^8.3.6",
+    "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-http": "^1.5.16",
+    "apollo-log": "^0.1.0",
+    "apollo-server-express": "^2.9.16",
+    "cross-fetch": "^3.0.4",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.0.0",
+    "graphql-tools": "^4.0.6",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

@@ -1,0 +1,28 @@
+type Room {
+  id: ID! @id
+
+  name: String!
+  messages: [Message!]
+
+  users: [RoomUser!]
+  # hostId: ID!
+  # participantIds: [ID!]! @scalarList(strategy: RELATION)
+}
+
+type RoomUser {
+  id: ID! @id
+
+  userId: ID!
+  room: Room!
+
+  isAdmin: Boolean! @default(value: false)
+}
+
+type Message {
+  id: ID! @id
+
+  content: String!
+  authorId: ID!
+
+  room: Room!
+}

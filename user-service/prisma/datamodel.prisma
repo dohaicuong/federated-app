@@ -1,0 +1,18 @@
+type User {
+  id: ID! @id
+
+  email: String! @unique
+  password: String!
+
+  name: String
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Event {
+  id: ID! @id
+
+  type: String!
+  payload: Json!
+}

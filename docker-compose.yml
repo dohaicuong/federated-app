@@ -1,0 +1,80 @@
+version: '2.2'
+
+services:
+  gateway:
+    build: gateway
+    # image: dohaicuong/chatapp-gateway
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      JWT_SECRET: mikumikumasumasukawaii
+      SERVICE_PORT: 5000
+    depends_on:
+      - user-service
+      - chat-service
+    volumes:
+      - ./gateway/src:/etc/app/src
+      - ./gateway/node_modules:/etc/app/node_modules
+
+  chat-service:
+    build: chat-service
+    restart: unless-stopped
+    ports:
+      - "4001:4001"
+    environment:
+      PRISMA_ENDPOINT: http://prisma:4466/chat-service
+      SERVICE_PORT: 4001
+    depends_on:
+      - prisma
+    volumes:
+      - ./chat-service/src:/etc/app/src
+      - ./chat-service/node_modules:/etc/app/node_modules
+
+  user-service:
+    build: user-service
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PRISMA_ENDPOINT: http://prisma:4466/user-service
+      JWT_SECRET: mikumikumasumasukawaii
+      SERVICE_PORT: 4000
+    depends_on:
+      - prisma
+    volumes:
+      - ./user-service/src:/etc/app/src
+      - ./user-service/node_modules:/etc/app/node_modules
+
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: unless-stopped
+    ports:
+      - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: postgres
+            host: db
+            user: prisma
+            password: prisma
+            rawAccess: true
+            port: 5432
+            migrations: true
+  db:
+    image: postgres:12-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  db: ~
