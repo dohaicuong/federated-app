@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.8.3",
+    "@material-ui/icons": "^4.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -10,6 +12,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "formik": "^2.1.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
@@ -18,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!storybook-formik)/\"",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
@@ -40,9 +43,17 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.3",
+    "@storybook/addon-docs": "^5.3.3",
     "@storybook/addon-links": "^5.3.3",
+    "@storybook/addon-storyshots": "^5.3.3",
+    "@storybook/addon-storyshots-puppeteer": "^5.3.3",
+    "@storybook/addon-viewport": "^5.3.3",
     "@storybook/addons": "^5.3.3",
     "@storybook/preset-create-react-app": "^1.5.1",
-    "@storybook/react": "^5.3.3"
+    "@storybook/react": "^5.3.3",
+    "puppeteer": "^2.0.0",
+    "react-storybook-addon-props-combinations": "^1.1.0",
+    "react-test-renderer": "^16.12.0",
+    "storybook-formik": "^2.0.8"
   }
 }
