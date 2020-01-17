@@ -1,6 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-// import { useHistory } from 'react-router'
+import { Switch, Route, useHistory, useRouteMatch } from 'react-router-dom'
 
 const routes = [
   { exact: false, path: '/auth', component: React.lazy(() => import('pages/auth')) },
@@ -9,18 +8,12 @@ const routes = [
 ]
 
 const RouteProvider: React.FC = () => {
-  // auth hooks check if
-  // user is currently auth or not
-  // const isAuth = false
-
-  // on the first time loading the page
-  // if user is not auth push back to login
-  // otherwise push to root
-  // const { push } = useHistory()
-  // React.useEffect(() => {
-  //   if(isAuth) push('/app/cases')
-  //   else push('/auth/login')
-  // }, [isAuth, push])
+  // redirect user to the app root
+  const { push } = useHistory()
+  const isRoot = useRouteMatch({ path: '/' })
+  React.useEffect(() => {
+    if(isRoot && isRoot.isExact) push('/app')
+  }, [isRoot, push])
 
   return (
     <React.Suspense fallback={null}>
