@@ -88,6 +88,17 @@ const resolvers: Resolvers = {
 
       return prisma.deleteMessage({ id: input.messageId })
     }
+  },
+  Subscription: {
+    messageInRoom: {
+      subscribe: async (root, { roomId }, { prisma }) => {
+        return prisma.$subscribe.message({
+          node: { room: { id: roomId }}
+        })
+        .node()
+      },
+      resolve: (payload: any) => payload,
+    }
   }
 }
 

@@ -29,11 +29,11 @@ export type MessageSendInput = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  roomCreate?: Maybe<Room>,
-  roomAddPeople?: Maybe<Room>,
-  roomRemovePeople?: Maybe<Room>,
-  messageSend?: Maybe<Message>,
-  messageDelete?: Maybe<Message>,
+  roomCreate: Room,
+  roomAddPeople: Room,
+  roomRemovePeople: Room,
+  messageSend: Message,
+  messageDelete: Message,
 };
 
 
@@ -99,6 +99,16 @@ export type RoomCreateInput = {
 export type RoomRemovePeopleInput = {
   roomId: Scalars['ID'],
   userId: Scalars['ID'],
+};
+
+export type Subscription = {
+   __typename?: 'Subscription',
+  messageInRoom: Message,
+};
+
+
+export type SubscriptionMessageInRoomArgs = {
+  roomId: Scalars['ID']
 };
 
 
@@ -183,6 +193,7 @@ export type ResolversTypes = {
   RoomRemovePeopleInput: RoomRemovePeopleInput,
   MessageSendInput: MessageSendInput,
   MessageDeleteInput: MessageDeleteInput,
+  Subscription: ResolverTypeWrapper<{}>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -199,6 +210,7 @@ export type ResolversParentTypes = {
   RoomRemovePeopleInput: RoomRemovePeopleInput,
   MessageSendInput: MessageSendInput,
   MessageDeleteInput: MessageDeleteInput,
+  Subscription: {},
   Boolean: Scalars['Boolean'],
 };
 
@@ -209,11 +221,11 @@ export type MessageResolvers<ContextType = Context, ParentType extends Resolvers
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  roomCreate?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<MutationRoomCreateArgs, 'input'>>,
-  roomAddPeople?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<MutationRoomAddPeopleArgs, 'input'>>,
-  roomRemovePeople?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<MutationRoomRemovePeopleArgs, 'input'>>,
-  messageSend?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationMessageSendArgs, 'input'>>,
-  messageDelete?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationMessageDeleteArgs, 'input'>>,
+  roomCreate?: Resolver<ResolversTypes['Room'], ParentType, ContextType, RequireFields<MutationRoomCreateArgs, 'input'>>,
+  roomAddPeople?: Resolver<ResolversTypes['Room'], ParentType, ContextType, RequireFields<MutationRoomAddPeopleArgs, 'input'>>,
+  roomRemovePeople?: Resolver<ResolversTypes['Room'], ParentType, ContextType, RequireFields<MutationRoomRemovePeopleArgs, 'input'>>,
+  messageSend?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationMessageSendArgs, 'input'>>,
+  messageDelete?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationMessageDeleteArgs, 'input'>>,
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -229,11 +241,16 @@ export type RoomResolvers<ContextType = Context, ParentType extends ResolversPar
   userIds?: Resolver<Maybe<Array<ResolversTypes['ID']>>, ParentType, ContextType>,
 };
 
+export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  messageInRoom?: SubscriptionResolver<ResolversTypes['Message'], "messageInRoom", ParentType, ContextType, RequireFields<SubscriptionMessageInRoomArgs, 'roomId'>>,
+};
+
 export type Resolvers<ContextType = Context> = {
   Message?: MessageResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Room?: RoomResolvers<ContextType>,
+  Subscription?: SubscriptionResolvers<ContextType>,
 };
 
 

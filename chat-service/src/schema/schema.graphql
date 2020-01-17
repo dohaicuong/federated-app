@@ -23,12 +23,12 @@ type Query {
 }
 
 type Mutation {
-  roomCreate(input: RoomCreateInput!): Room
-  roomAddPeople(input: RoomAddPeopleInput!): Room
-  roomRemovePeople(input: RoomRemovePeopleInput!): Room
+  roomCreate(input: RoomCreateInput!): Room!
+  roomAddPeople(input: RoomAddPeopleInput!): Room!
+  roomRemovePeople(input: RoomRemovePeopleInput!): Room!
 
-  messageSend(input: MessageSendInput!): Message
-  messageDelete(input: MessageDeleteInput!): Message
+  messageSend(input: MessageSendInput!): Message!
+  messageDelete(input: MessageDeleteInput!): Message!
 }
 
 input RoomCreateInput {
@@ -49,4 +49,8 @@ input MessageSendInput {
 }
 input MessageDeleteInput {
   messageId: ID!
+}
+
+type Subscription {
+  messageInRoom(roomId: ID!): Message!
 }
