@@ -17,6 +17,15 @@ Services are build with hot reload in container, just go and edit the code.
 
 Logging `docker logs $SERVICE_NAME`
 
+### Start develop frontend
+
+To use GraphQL Code Gen
+
+```
+cd frontend
+yarn gen --watch
+```
+
 ### Start develop components
 
 ```
