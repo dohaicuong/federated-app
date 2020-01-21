@@ -42,9 +42,9 @@ const Chatbar: React.FC<CharbarProps> = ({ roomId, authorId }) => {
   return (
     <>
       <ActionButton icon={<AddCircleIcon />} onClick={handleMoreActions} />
-      <ActionButton icon={<GifIcon />} onClick={handleSendGif} />
-      <ActionButton icon={<InsertDriveFileIcon />} onClick={handleSendSticker} />
-      <ActionButton icon={<ImageIcon />} onClick={handleSendFile} />
+      <ActionButton icon={<GifIcon />} onClick={handleSendGif} title='Chosse a gif' />
+      <ActionButton icon={<InsertDriveFileIcon />} onClick={handleSendSticker} title='Chosse a sticker' />
+      <ActionButton icon={<ImageIcon />} onClick={handleSendFile} title='Add files' />
       <ChatField
         roomId={roomId}
         handleSendEmoji={handleSendEmoji}
@@ -101,7 +101,7 @@ const Chatbar: React.FC<CharbarProps> = ({ roomId, authorId }) => {
           }, 400)
         }}
       />
-      <ActionButton icon={<ThumbUpIcon />} onClick={handleSendLike} />
+      <ActionButton icon={<ThumbUpIcon />} onClick={handleSendLike} title='Send a like' />
     </>
   )
 }
@@ -111,12 +111,14 @@ export default Chatbar
 interface ActionButtonProps {
   icon: React.ReactElement
   onClick?: any
+
+  title?: string
 }
-const ActionButton: React.FC<ActionButtonProps> = ({ icon, onClick }) => {
+const ActionButton: React.FC<ActionButtonProps> = ({ icon, onClick, ...props }) => {
   const theme = useTheme()
 
   return (
-    <Grid item style={{ width: 52, display: 'flex', justifyContent: 'center' }}>
+    <Grid item style={{ width: 52, display: 'flex', justifyContent: 'center' }} {...props}>
       <IconButton onClick={onClick && onClick}>
         {React.cloneElement(icon, { style: { color: theme.palette.primary.main }})}
       </IconButton>
@@ -135,11 +137,12 @@ const ChatField: React.FC<ChatFieldProps> = ({ roomId, onSubmit, handleSendEmoji
   return (
     <Grid item xs>
       <Formik
-        initialValues={{ input: { roomId, content: '' }}}
-        onSubmit={(values, helpers) => onSubmit && onSubmit(values, helpers, inputRef)}
+        initialValues={{ input: { content: '' }}}
+        onSubmit={(values, helpers) => onSubmit && onSubmit({ ...values, input: { ...values.input, roomId } }, helpers, inputRef)}
       >
         <Form>
           <TextField
+            title='Chosse an emoji'
             name='input.content'
             inputRef={inputRef}
             autoFocus

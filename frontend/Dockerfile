@@ -6,4 +6,4 @@ RUN yarn
 
 COPY . .
 
-ENTRYPOINT yarn dev
+ENTRYPOINT yarn start

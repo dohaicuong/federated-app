@@ -23,7 +23,7 @@ const link = split(
 export default new ApolloClient({
   cache: new InMemoryCache({
     fragmentMatcher,
-    dataIdFromObject: o => o.id
+    // dataIdFromObject: o => o.id
   }),
   link: ApolloLink.from([
     linkError,

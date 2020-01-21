@@ -26,14 +26,18 @@ const MessageGroup: React.FC<MessageGroupProps> = ({
     </>
   )
 
-  const totalUser = room.users.length + room.admins.length
+  const roomUsers = room?.users ?? []
+  const roomAdmins = room?.admins ?? []
+  const roomName = room?.name ?? ''
+
+  const totalUser = roomUsers.length + roomAdmins.length
   if (!groups?.length) return (
     <div>
       <Avatar style={{ margin: 'auto', width: 60, height: 60, marginBottom: 16, fontSize: '2rem' }}>
-        {room.name[0]}
+        {roomName[0]}
       </Avatar>
       <Typography variant='h6' style={{ textAlign: 'center' }}>
-        {room.name}
+        {roomName}
       </Typography>
       <Typography variant='body1' style={{ textAlign: 'center' }}>
         {totalUser}

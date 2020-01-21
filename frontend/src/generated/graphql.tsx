@@ -172,6 +172,56 @@ export type AuthQuery = (
   & Pick<Query, 'isAuth'>
 );
 
+export type RoomListQueryVariables = {};
+
+
+export type RoomListQuery = (
+  { __typename?: 'Query' }
+  & { me: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { rooms: Maybe<Array<(
+      { __typename?: 'Room' }
+      & Pick<Room, 'id' | 'name'>
+    )>> }
+  )> }
+);
+
+export type AddUserDialogDataQueryVariables = {};
+
+
+export type AddUserDialogDataQuery = (
+  { __typename?: 'Query' }
+  & { users: Maybe<Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'email'>
+    & { rooms: Maybe<Array<(
+      { __typename?: 'Room' }
+      & Pick<Room, 'id'>
+    )>> }
+  )>> }
+);
+
+export type AddUserDialogActionMutationVariables = {
+  input: RoomAddPeopleInput
+};
+
+
+export type AddUserDialogActionMutation = (
+  { __typename?: 'Mutation' }
+  & { roomAddPeople: (
+    { __typename?: 'Room' }
+    & { users: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'email'>
+      & { rooms: Maybe<Array<(
+        { __typename?: 'Room' }
+        & Pick<Room, 'id'>
+      )>> }
+    )>> }
+  ) }
+);
+
 export type SendMessageMutationVariables = {
   input: MessageSendInput
 };
@@ -206,6 +256,23 @@ export type RoomQuery = (
   )> }
 );
 
+export type ChatRoomSubscriptionSubscriptionVariables = {
+  roomId: Scalars['ID']
+};
+
+
+export type ChatRoomSubscriptionSubscription = (
+  { __typename?: 'Subscription' }
+  & { messageInRoom: (
+    { __typename?: 'Message' }
+    & Pick<Message, 'id' | 'content'>
+    & { author: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name'>
+    ) }
+  ) }
+);
+
 export type ChatRoomQueryVariables = {
   id: Scalars['ID']
 };
@@ -236,13 +303,27 @@ export type ChatRoomQuery = (
   )> }
 );
 
-export type RoomListQueryVariables = {};
+export type CreateRoomMutationVariables = {
+  input: RoomCreateInput
+};
 
 
-export type RoomListQuery = (
+export type CreateRoomMutation = (
+  { __typename?: 'Mutation' }
+  & { roomCreate: (
+    { __typename?: 'Room' }
+    & Pick<Room, 'id' | 'name'>
+  ) }
+);
+
+export type GetRoomListQueryVariables = {};
+
+
+export type GetRoomListQuery = (
   { __typename?: 'Query' }
   & { me: Maybe<(
     { __typename?: 'User' }
+    & Pick<User, 'id'>
     & { rooms: Maybe<Array<(
       { __typename?: 'Room' }
       & Pick<Room, 'id' | 'name'>
@@ -315,6 +396,118 @@ export function useAuthLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type AuthQueryHookResult = ReturnType<typeof useAuthQuery>;
 export type AuthLazyQueryHookResult = ReturnType<typeof useAuthLazyQuery>;
 export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQueryVariables>;
+export const RoomListDocument = gql`
+    query RoomList {
+  me {
+    id
+    rooms {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useRoomListQuery__
+ *
+ * To run a query within a React component, call `useRoomListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRoomListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRoomListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RoomListQuery, RoomListQueryVariables>) {
+        return ApolloReactHooks.useQuery<RoomListQuery, RoomListQueryVariables>(RoomListDocument, baseOptions);
+      }
+export function useRoomListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RoomListQuery, RoomListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<RoomListQuery, RoomListQueryVariables>(RoomListDocument, baseOptions);
+        }
+export type RoomListQueryHookResult = ReturnType<typeof useRoomListQuery>;
+export type RoomListLazyQueryHookResult = ReturnType<typeof useRoomListLazyQuery>;
+export type RoomListQueryResult = ApolloReactCommon.QueryResult<RoomListQuery, RoomListQueryVariables>;
+export const AddUserDialogDataDocument = gql`
+    query AddUserDialogData {
+  users {
+    id
+    name
+    email
+    rooms {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAddUserDialogDataQuery__
+ *
+ * To run a query within a React component, call `useAddUserDialogDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddUserDialogDataQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddUserDialogDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddUserDialogDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddUserDialogDataQuery, AddUserDialogDataQueryVariables>) {
+        return ApolloReactHooks.useQuery<AddUserDialogDataQuery, AddUserDialogDataQueryVariables>(AddUserDialogDataDocument, baseOptions);
+      }
+export function useAddUserDialogDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddUserDialogDataQuery, AddUserDialogDataQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AddUserDialogDataQuery, AddUserDialogDataQueryVariables>(AddUserDialogDataDocument, baseOptions);
+        }
+export type AddUserDialogDataQueryHookResult = ReturnType<typeof useAddUserDialogDataQuery>;
+export type AddUserDialogDataLazyQueryHookResult = ReturnType<typeof useAddUserDialogDataLazyQuery>;
+export type AddUserDialogDataQueryResult = ApolloReactCommon.QueryResult<AddUserDialogDataQuery, AddUserDialogDataQueryVariables>;
+export const AddUserDialogActionDocument = gql`
+    mutation AddUserDialogAction($input: RoomAddPeopleInput!) {
+  roomAddPeople(input: $input) {
+    users {
+      id
+      name
+      email
+      rooms {
+        id
+      }
+    }
+  }
+}
+    `;
+export type AddUserDialogActionMutationFn = ApolloReactCommon.MutationFunction<AddUserDialogActionMutation, AddUserDialogActionMutationVariables>;
+
+/**
+ * __useAddUserDialogActionMutation__
+ *
+ * To run a mutation, you first call `useAddUserDialogActionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserDialogActionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserDialogActionMutation, { data, loading, error }] = useAddUserDialogActionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddUserDialogActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddUserDialogActionMutation, AddUserDialogActionMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddUserDialogActionMutation, AddUserDialogActionMutationVariables>(AddUserDialogActionDocument, baseOptions);
+      }
+export type AddUserDialogActionMutationHookResult = ReturnType<typeof useAddUserDialogActionMutation>;
+export type AddUserDialogActionMutationResult = ApolloReactCommon.MutationResult<AddUserDialogActionMutation>;
+export type AddUserDialogActionMutationOptions = ApolloReactCommon.BaseMutationOptions<AddUserDialogActionMutation, AddUserDialogActionMutationVariables>;
 export const SendMessageDocument = gql`
     mutation SendMessage($input: MessageSendInput!) {
   messageSend(input: $input) {
@@ -388,6 +581,40 @@ export function useRoomLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type RoomQueryHookResult = ReturnType<typeof useRoomQuery>;
 export type RoomLazyQueryHookResult = ReturnType<typeof useRoomLazyQuery>;
 export type RoomQueryResult = ApolloReactCommon.QueryResult<RoomQuery, RoomQueryVariables>;
+export const ChatRoomSubscriptionDocument = gql`
+    subscription ChatRoomSubscription($roomId: ID!) {
+  messageInRoom(roomId: $roomId) {
+    id
+    content
+    author {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useChatRoomSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useChatRoomSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useChatRoomSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatRoomSubscriptionSubscription({
+ *   variables: {
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useChatRoomSubscriptionSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<ChatRoomSubscriptionSubscription, ChatRoomSubscriptionSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<ChatRoomSubscriptionSubscription, ChatRoomSubscriptionSubscriptionVariables>(ChatRoomSubscriptionDocument, baseOptions);
+      }
+export type ChatRoomSubscriptionSubscriptionHookResult = ReturnType<typeof useChatRoomSubscriptionSubscription>;
+export type ChatRoomSubscriptionSubscriptionResult = ApolloReactCommon.SubscriptionResult<ChatRoomSubscriptionSubscription>;
 export const ChatRoomDocument = gql`
     query ChatRoom($id: ID!) {
   me {
@@ -439,9 +666,43 @@ export function useChatRoomLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ChatRoomQueryHookResult = ReturnType<typeof useChatRoomQuery>;
 export type ChatRoomLazyQueryHookResult = ReturnType<typeof useChatRoomLazyQuery>;
 export type ChatRoomQueryResult = ApolloReactCommon.QueryResult<ChatRoomQuery, ChatRoomQueryVariables>;
-export const RoomListDocument = gql`
-    query RoomList {
+export const CreateRoomDocument = gql`
+    mutation CreateRoom($input: RoomCreateInput!) {
+  roomCreate(input: $input) {
+    id
+    name
+  }
+}
+    `;
+export type CreateRoomMutationFn = ApolloReactCommon.MutationFunction<CreateRoomMutation, CreateRoomMutationVariables>;
+
+/**
+ * __useCreateRoomMutation__
+ *
+ * To run a mutation, you first call `useCreateRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createRoomMutation, { data, loading, error }] = useCreateRoomMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateRoomMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateRoomMutation, CreateRoomMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateRoomMutation, CreateRoomMutationVariables>(CreateRoomDocument, baseOptions);
+      }
+export type CreateRoomMutationHookResult = ReturnType<typeof useCreateRoomMutation>;
+export type CreateRoomMutationResult = ApolloReactCommon.MutationResult<CreateRoomMutation>;
+export type CreateRoomMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRoomMutation, CreateRoomMutationVariables>;
+export const GetRoomListDocument = gql`
+    query GetRoomList {
   me {
+    id
     rooms {
       id
       name
@@ -451,29 +712,29 @@ export const RoomListDocument = gql`
     `;
 
 /**
- * __useRoomListQuery__
+ * __useGetRoomListQuery__
  *
- * To run a query within a React component, call `useRoomListQuery` and pass it any options that fit your needs.
- * When your component renders, `useRoomListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useGetRoomListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoomListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useRoomListQuery({
+ * const { data, loading, error } = useGetRoomListQuery({
  *   variables: {
  *   },
  * });
  */
-export function useRoomListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RoomListQuery, RoomListQueryVariables>) {
-        return ApolloReactHooks.useQuery<RoomListQuery, RoomListQueryVariables>(RoomListDocument, baseOptions);
+export function useGetRoomListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRoomListQuery, GetRoomListQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetRoomListQuery, GetRoomListQueryVariables>(GetRoomListDocument, baseOptions);
       }
-export function useRoomListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RoomListQuery, RoomListQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<RoomListQuery, RoomListQueryVariables>(RoomListDocument, baseOptions);
+export function useGetRoomListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRoomListQuery, GetRoomListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetRoomListQuery, GetRoomListQueryVariables>(GetRoomListDocument, baseOptions);
         }
-export type RoomListQueryHookResult = ReturnType<typeof useRoomListQuery>;
-export type RoomListLazyQueryHookResult = ReturnType<typeof useRoomListLazyQuery>;
-export type RoomListQueryResult = ApolloReactCommon.QueryResult<RoomListQuery, RoomListQueryVariables>;
+export type GetRoomListQueryHookResult = ReturnType<typeof useGetRoomListQuery>;
+export type GetRoomListLazyQueryHookResult = ReturnType<typeof useGetRoomListLazyQuery>;
+export type GetRoomListQueryResult = ApolloReactCommon.QueryResult<GetRoomListQuery, GetRoomListQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($data: UserLoginDataInput!) {
   login(data: $data) {

@@ -34,6 +34,7 @@ const CollapsableList: React.FC<CollapsableListProps> = ({ items, collapsed, sel
           <ListItem
             key={index}
             button
+            title={item.title}
             selected={selectedIndex === index}
             onClick={() => itemOnClick && itemOnClick(item, index)}
           >
