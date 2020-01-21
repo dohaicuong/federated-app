@@ -1,6 +1,17 @@
 version: '2.2'
 
 services:
+  frontend:
+    build: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_ENDPOINT: http://localhost:5000/graphql
+      REACT_APP_SUBSCRIPTION_ENDPOINT: ws://localhost:5000/graphql
+    volumes:
+      - ./frontend/src:/etc/app/src
+      - ./frontend/node_modules:/etc/app/node_modules
+
   gateway:
     build: gateway
     # image: dohaicuong/chatapp-gateway
