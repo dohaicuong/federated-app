@@ -2,9 +2,9 @@ type Room {
   id: ID! @id
 
   name: String!
-  messages: [Message!]
+  messages: [Message!] @relation(name: "MessageOnRoom", onDelete: CASCADE)
 
-  users: [RoomUser!]
+  users: [RoomUser!] @relation(name: "UsersOnRoom", onDelete: CASCADE)
   # hostId: ID!
   # participantIds: [ID!]! @scalarList(strategy: RELATION)
 }
@@ -13,7 +13,7 @@ type RoomUser {
   id: ID! @id
 
   userId: ID!
-  room: Room!
+  room: Room! @relation(name: "UsersOnRoom")
 
   isAdmin: Boolean! @default(value: false)
 }
@@ -24,5 +24,5 @@ type Message {
   content: String!
   authorId: ID!
 
-  room: Room!
+  room: Room! @relation(name: "MessageOnRoom")
 }
