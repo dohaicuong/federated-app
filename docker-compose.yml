@@ -34,6 +34,17 @@ services:
       - ./gateway/src:/etc/app/src
       - ./gateway/node_modules:/etc/app/node_modules
 
+  visualize-service:
+    build: visualize-service
+    restart: unless-stopped
+    ports:
+      - "4002:4002"
+    environment:
+      SERVICE_PORT: 4002
+    volumes:
+      - ./visualize-service/src:/etc/app/src
+      - ./visualize-service/node_modules:/etc/app/node_modules
+
   chat-service:
     build: chat-service
     restart: unless-stopped
