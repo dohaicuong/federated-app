@@ -10,6 +10,7 @@ import Sidebar from './layout/Sidebar'
 
 import CreateRoom from './pages/CreateRoom'
 import ChatRoom from './pages/ChatRoom'
+import Dashboard from './pages/Dashboard'
 import NotFound from 'components/NotFound'
 
 export default () => {
@@ -27,6 +28,7 @@ export default () => {
         <Switch>
           <Route exact={true} path='/app/room/create' component={CreateRoom} />
           <Route exact={true} path='/app/room/:id' component={ChatRoom} />
+          <Route exact={true} path='/app/dashboard' component={Dashboard} />
           <Route exact={true} path='*' component={NotFound} />
         </Switch>
       )}

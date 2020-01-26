@@ -1,6 +1,8 @@
 import React from 'react'
-import { Typography, IconButton, Menu, MenuItem } from '@material-ui/core'
+import { Typography, IconButton, Menu, MenuItem, Button } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import { Link } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom'
 // import { useApolloClient } from '@apollo/react-hooks'
 
@@ -12,8 +14,12 @@ export default () => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+      <Button color='inherit' startIcon={<DashboardIcon />} component={Link} to='/app/dashboard'>
+        Dashboard
+      </Button>
+      <div style={{ flexGrow: 1 }} />
       <Typography variant='h6' noWrap>
-        Chat App
+        App
       </Typography>
       <div style={{ flexGrow: 1 }} />
       <IconButton edge='end' color='inherit' onClick={handleProfileMenuOpen}>

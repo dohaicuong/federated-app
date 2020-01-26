@@ -82,6 +82,7 @@ export type MutationMessageDeleteArgs = {
 
 export type Query = {
    __typename?: 'Query',
+  hello: Scalars['String'],
   isAuth: Scalars['Boolean'],
   me?: Maybe<User>,
   room?: Maybe<Room>,
@@ -138,6 +139,7 @@ export type RoomRemovePeopleInput = {
 export type Subscription = {
    __typename?: 'Subscription',
   messageInRoom: Message,
+  randomNumber: Scalars['Int'],
 };
 
 
@@ -329,6 +331,14 @@ export type GetRoomListQuery = (
       & Pick<Room, 'id' | 'name'>
     )>> }
   )> }
+);
+
+export type DashboardSubscriptionVariables = {};
+
+
+export type DashboardSubscription = (
+  { __typename?: 'Subscription' }
+  & Pick<Subscription, 'randomNumber'>
 );
 
 export type LoginMutationVariables = {
@@ -735,6 +745,32 @@ export function useGetRoomListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type GetRoomListQueryHookResult = ReturnType<typeof useGetRoomListQuery>;
 export type GetRoomListLazyQueryHookResult = ReturnType<typeof useGetRoomListLazyQuery>;
 export type GetRoomListQueryResult = ApolloReactCommon.QueryResult<GetRoomListQuery, GetRoomListQueryVariables>;
+export const DashboardDocument = gql`
+    subscription Dashboard {
+  randomNumber
+}
+    `;
+
+/**
+ * __useDashboardSubscription__
+ *
+ * To run a query within a React component, call `useDashboardSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useDashboardSubscription` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDashboardSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDashboardSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<DashboardSubscription, DashboardSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<DashboardSubscription, DashboardSubscriptionVariables>(DashboardDocument, baseOptions);
+      }
+export type DashboardSubscriptionHookResult = ReturnType<typeof useDashboardSubscription>;
+export type DashboardSubscriptionResult = ApolloReactCommon.SubscriptionResult<DashboardSubscription>;
 export const LoginDocument = gql`
     mutation Login($data: UserLoginDataInput!) {
   login(data: $data) {
