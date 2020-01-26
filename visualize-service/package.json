@@ -1,0 +1,20 @@
+{
+  "name": "data-visualize-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "gen": "graphql-codegen --config codegen.yml",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index",
+    "test": "jest"
+  },
+  "dependencies": {
+    "apollo-server": "^2.9.16",
+    "graphql-subscriptions": "^1.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.5"
+  }
+}
