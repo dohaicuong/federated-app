@@ -19,7 +19,7 @@
     "apollo-link-http": "^1.5.16",
     "apollo-link-ws": "^1.0.19",
     "apollo-log": "^0.1.0",
-    "apollo-server-express": "^2.9.16",
+    "apollo-server-express": "^2.14.2",
     "cross-fetch": "^3.0.4",
     "express": "^4.17.1",
     "express-rate-limit": "^5.0.0",
